@@ -62,12 +62,63 @@ Ejmeplo:
         <a routerLink="/heroes">Heroes</a>// Esta cabecera siempre aparece
 </nav>
 
-<router-outlet></router-outlet>  Esto lo reemplaza la ruta 
+<router-outlet></router-outlet>  // Esto lo reemplaza la ruta 
 
 
-<app-messages></app-messages>// Este Header siempre aparecer
+<app-messages></app-messages>// Este Footer siempre aparece
 ´´´
 
 Este es un redirect a un view = { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
 Por aquí quedamos.https://angular.io/tutorial/toh-pt5#routable-herodetailcomponent
+
+
+## Trabajar con rutas que traen paramtros variables
+
+Para esto necesitamos importar:
+import { ActivatedRoute } from '@angular/router';
+Que guarda los datos de la url.
+
+import { Location } from '@angular/common';
+
+Location es un servicio para interactuar con el navegador.
+
+
+
+## Obtener datos de la url 
+Algo mas de sintaxis (+) Delante de una variable convierte en numero el elemento.
+
+´´´
+getHero(): void {
+  const id = +this.route.snapshot.paramMap.get('id'); --> En esta instrucción  de tipo ActivatedRoute.snapshot-> Traemos un foto de la url.
+  this.heroService.getHero(id)
+    .subscribe(hero => this.hero = hero);
+}
+´´´
+
+##Leer datos Https
+
+importamos para nuestro app.module.ts el httpClientModule
+
+import { HttpClientModule }    from '@angular/common/http';
+
+Agregamos el import 
+
+@NgModule({
+  imports: [
+    HttpClientModule,
+  ],
+})
+
+
+### Leer de un cliente Http en un componentes/Servicio
+
+1. Importamos:
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+2.
+Creacemos variables donde almacenar Url de los elementos que vamos a obtener de la api.
+
+3. obtenemos datos con el metodo this.http.get<dtaTipe>(url) que previamente debimos haber injectado
+
+## Manejo de errores Http
